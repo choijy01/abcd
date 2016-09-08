@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.member.config.MyAccount">
+
+<!-- 전체보기 -->
+<select id="listData" resultType="vo">
+select * from springmember
+<where>
+<if test='word!=null and field=="name"'>
+name like '%${word}%'
+</if>
+<if test='word!=null and field=="memo"'>
+memo like '%${word}%'
+</if>
+</where>
+</select>
+
+<!-- 추가 -->
+<insert id="insertData" parameterType="vo">
+insert into springmember(id,pass,name,addr,memo,reg_date) 
+ values(#{id},#{pass},#{name},#{addr},#{memo},sysdate)
+</insert>
+
+<!-- 상세보기 -->
+<select id="viewData" parameterType="String" resultType="vo">
+select * from springmember where id=#{ids}
+</select>
+
+<!-- 삭제 -->
+<delete id="deleteData" parameterType="String">
+delete from springmember where id=#{value}
+</delete>
+</mapper>
